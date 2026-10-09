@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShreeIndoreNgo - Small Acts. Greater Impact.</title>
+    <!-- SEO Best Practices -->
+    <meta name="description" content="ShreeIndoreNgo is a community-focused nonprofit in Indore supporting education, food distribution, women empowerment, and environmental sustainability.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F47B20',
+                        deep: '#C6531B',
+                        yellow: '#FFC857',
+                        cream: '#FFF9F0',
+                        charcoal: '#242424',
+                        muted: '#6B7280',
+                        soft: '#FFF0DF',
+                    },
+                    fontFamily: {
+                        heading: ['Poppins', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-heading { font-family: 'Poppins', sans-serif; }
+        
+        /* Animations */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        
+        /* Accordion */
+        .accordion-content { transition: max-height 0.3s ease-out, padding 0.3s ease; max-height: 0; overflow: hidden; }
+        .accordion-content.expanded { max-height: 500px; padding-bottom: 1rem; }
+        .accordion-icon { transition: transform 0.3s ease; }
+        .accordion-btn.active .accordion-icon { transform: rotate(180deg); }
+        
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: var(--color-primary, #F47B20); color: white; padding: 0.75rem 1.75rem;
+            border-radius: 9999px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .btn-primary:hover { background-color: var(--color-deep, #C6531B); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(244, 123, 32, 0.3); }
+        
+        .btn-secondary {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: white; color: var(--color-charcoal, #242424); padding: 0.75rem 1.75rem;
+            border-radius: 9999px; font-weight: 600; transition: all 0.3s ease; border: 1px solid #e5e7eb;
+        }
+        .btn-secondary:hover { border-color: var(--color-primary, #F47B20); color: var(--color-primary, #F47B20); transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        
+        .donation-amount.selected {
+            background-color: #F47B20; color: white; border-color: #F47B20;
+        }
+        
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed; z-index: 100;
+            background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center;
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0px 6px 14px rgba(0,0,0,0.4); }
+        @media (max-width: 768px) {
+            .whatsapp-float { width: 50px; height: 50px; bottom: 20px; right: 20px; }
+            .whatsapp-float svg { width: 24px; height: 24px; }
+        }
+        @media (min-width: 769px) {
+            .whatsapp-float { width: 60px; height: 60px; bottom: 30px; right: 30px; }
+            .whatsapp-float svg { width: 30px; height: 30px; }
+        }
+    </style>
+</head>
+<body class="bg-cream text-charcoal antialiased">
+
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="#home" class="flex-shrink-0 flex items-center gap-2" aria-label="ShreeIndoreNgo Home">
+                    <i data-lucide="sun" class="text-primary w-8 h-8"></i>
+                    <span class="font-heading font-bold text-2xl tracking-tight text-charcoal">ShreeIndore<span class="text-primary">Ngo</span></span>
+                </a>
+                <div class="hidden lg:flex space-x-8">
+                    <a href="#home" class="text-muted hover:text-primary font-medium transition-colors">Home</a>
+                    <a href="#about" class="text-muted hover:text-primary font-medium transition-colors">About Us</a>
+                    <a href="#initiatives" class="text-muted hover:text-primary font-medium transition-colors">Our Initiatives</a>
+                    <a href="#impact" class="text-muted hover:text-primary font-medium transition-colors">Our Impact</a>
+                    <a href="#get-involved" class="text-muted hover:text-primary font-medium transition-colors">Get Involved</a>
+                    <a href="#contact" class="text-muted hover:text-primary font-medium transition-colors">Contact</a>
+                </div>
+                <div class="hidden lg:flex items-center">
+                    <a href="https://wa.me/916232767443?text=Hello%2C%20I%20would%20like%20to%20support%20ShreeIndoreNgo." target="_blank" rel="noopener noreferrer" class="btn-primary">
+                        Donate Now
+                    </a>
+                </div>
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-charcoal hover:text-primary focus:outline-none p-2" aria-label="Toggle mobile menu">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 px-4 pt-2 pb-6 space-y-2 shadow-lg">
+            <a href="#home" class="block px-3 py-2 text-charcoal hover:text-primary font-medium rounded-md hover:bg-soft">Home</a>
+            <a href="#about" class="block px-3 py-2 text-charcoal hover:text-primary font-medium rounded-md hover:bg-soft">About Us</a>
+            <a href="#initiatives" class="block px-3 py-2 text-charcoal hover:text-primary font-medium rounded-md hover:bg-soft">Our Initiatives</a>
+            <a href="#impact" class="block px-3 py-2 text-charcoal hover:text-primary font-medium rounded-md hover:bg-soft">Our Impact</a>
+            <a href="#get-involved" class="block px-3 py-2 text-charcoal hover:text-primary font-medium rounded-md hover:bg-soft">Get Involved</a>
+            <a href="#contact" class="block px-3 py-2 text-charcoal hover:text-primary font-medium rounded-md hover:bg-soft">Contact</a>
+            <a href="https://wa.me/916232767443?text=Hello%2C%20I%20would%20like%20to%20support%20ShreeIndoreNgo." target="_blank" class="block w-full text-center mt-4 btn-primary">Donate Now</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+                <div class="fade-in z-10">
+                    <span class="inline-block py-1.5 px-4 rounded-full bg-soft text-primary font-semibold text-xs tracking-wider uppercase mb-6 border border-primary/10">Rooted in Indore. Driven by Compassion.</span>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-extrabold text-charcoal leading-tight mb-6">
+                        Together, Let's Build a <span class="text-primary">Better Tomorrow.</span>
+                    </h1>
+                    <p class="text-lg text-muted mb-8 max-w-lg leading-relaxed">
+                        ShreeIndoreNgo is committed to creating meaningful change through education, community support, food assistance, and environmental awareness. Every small action brings us closer to a stronger, kinder community.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 mb-8">
+                        <a href="https://wa.me/916232767443?text=Hello%2C%20I%20would%20like%20to%20support%20ShreeIndoreNgo." target="_blank" class="btn-primary text-lg">Support Our Mission</a>
+                        <a href="#initiatives" class="btn-secondary text-lg">Explore Our Initiatives</a>
+                    </div>
+                    <div class="flex items-center gap-3 text-sm font-medium text-muted bg-white/50 inline-flex px-4 py-2 rounded-full backdrop-blur-sm border border-gray-100">
+                        <i data-lucide="shield-check" class="w-5 h-5 text-yellow"></i>
+                        <span>Every contribution begins a journey of change.</span>
+                    </div>
+                </div>
+                <div class="relative fade-in delay-200 lg:h-[550px] rounded-[2rem] overflow-hidden shadow-2xl group">
+                    <img src="https://images.unsplash.com/photo-1524069290683-0457abfe42c3?auto=format&fit=crop&q=80&w=1200" alt="Indian children smiling" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-charcoal/20 to-transparent"></div>
+                    
+                    <div class="absolute bottom-6 left-6 right-6 flex flex-col sm:flex-row gap-4">
+                        <div class="bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-xl flex items-center gap-4 flex-1 transform transition hover:-translate-y-1">
+                            <div class="w-12 h-12 bg-soft rounded-full flex items-center justify-center text-primary shrink-0">
+                                <i data-lucide="book-open" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="font-heading font-bold text-charcoal leading-tight">Hope Through</p>
+                                <p class="text-sm text-muted">Education</p>
+                            </div>
+                        </div>
+                        <div class="bg-white/95 backdrop-blur-sm p-4 rounded-2xl shadow-xl items-center gap-4 flex-1 hidden sm:flex transform transition hover:-translate-y-1">
+                            <div class="w-12 h-12 bg-yellow/20 rounded-full flex items-center justify-center text-yellow shrink-0">
+                                <i data-lucide="users" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <p class="font-heading font-bold text-charcoal leading-tight">Stronger</p>
+                                <p class="text-sm text-muted">Communities</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 lg:py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+                <span class="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">Who We Are</span>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal mb-6">A Little Kindness Can Change a Lot.</h2>
+                <p class="text-muted text-lg leading-relaxed">
+                    ShreeIndoreNgo is a community-focused nonprofit initiative created to support people, expand opportunities, and encourage positive change in Indore. Through local participation and collaborative efforts, we aim to make education more accessible, support families in need, empower women, and inspire responsible environmental practices.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Mission -->
+                <div class="bg-cream p-8 rounded-3xl fade-in hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-soft">
+                    <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-primary mb-6 shadow-sm">
+                        <i data-lucide="target" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-charcoal mb-4">Our Mission</h3>
+                    <p class="text-muted leading-relaxed">To encourage inclusive growth by supporting education, essential needs, and community-led development.</p>
+                </div>
+                <!-- Vision -->
+                <div class="bg-cream p-8 rounded-3xl fade-in delay-100 hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-soft">
+                    <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-primary mb-6 shadow-sm">
+                        <i data-lucide="eye" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-charcoal mb-4">Our Vision</h3>
+                    <p class="text-muted leading-relaxed">To build a compassionate society where every individual has the opportunity to learn, grow, and live with dignity.</p>
+                </div>
+                <!-- Values -->
+                <div class="bg-cream p-8 rounded-3xl fade-in delay-200 hover:shadow-xl transition-shadow duration-300 border border-transparent hover:border-soft">
+                    <div class="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-primary mb-6 shadow-sm">
+                        <i data-lucide="heart" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-charcoal mb-4">Our Values</h3>
+                    <p class="text-muted leading-relaxed">Compassion, integrity, inclusion, transparency, and collective responsibility.</p>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center fade-in delay-300">
+                <a href="#stories" class="btn-secondary">Our Story</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Initiatives -->
+    <section id="initiatives" class="py-16 lg:py-24 bg-soft/50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+                <span class="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">What We Do</span>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal mb-6">Turning Good Intentions Into Meaningful Action.</h2>
+                <p class="text-muted text-lg">Explore the areas where ShreeIndoreNgo aims to make a difference.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Initiative 1 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 group fade-in border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-soft rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-14 h-14 bg-soft rounded-2xl flex items-center justify-center text-primary">
+                            <i data-lucide="book-open" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-4xl font-heading font-extrabold text-gray-100 group-hover:text-soft transition-colors">01</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-charcoal mb-3">Education for Every Child</h3>
+                    <p class="text-muted mb-6">Encouraging access to learning resources, educational guidance, school supplies, and learning opportunities for children.</p>
+                    <a href="#" class="inline-flex items-center text-primary font-semibold hover:text-deep transition-colors">Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                </div>
+                
+                <!-- Initiative 2 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 group fade-in delay-100 border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-yellow/10 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-14 h-14 bg-yellow/20 rounded-2xl flex items-center justify-center text-yellow">
+                            <i data-lucide="utensils" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-4xl font-heading font-extrabold text-gray-100 group-hover:text-yellow/20 transition-colors">02</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-charcoal mb-3">Food & Essential Support</h3>
+                    <p class="text-muted mb-6">Supporting community food drives and initiatives that help families access essential supplies.</p>
+                    <a href="#" class="inline-flex items-center text-primary font-semibold hover:text-deep transition-colors">Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                </div>
+
+                <!-- Initiative 3 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 group fade-in delay-200 border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-soft rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-14 h-14 bg-soft rounded-2xl flex items-center justify-center text-primary">
+                            <i data-lucide="user-check" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-4xl font-heading font-extrabold text-gray-100 group-hover:text-soft transition-colors">03</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-charcoal mb-3">Women Empowerment</h3>
+                    <p class="text-muted mb-6">Promoting skills development, confidence, awareness, and opportunities for women.</p>
+                    <a href="#" class="inline-flex items-center text-primary font-semibold hover:text-deep transition-colors">Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                </div>
+
+                <!-- Initiative 4 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 group fade-in border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-yellow/10 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-14 h-14 bg-yellow/20 rounded-2xl flex items-center justify-center text-yellow">
+                            <i data-lucide="leaf" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-4xl font-heading font-extrabold text-gray-100 group-hover:text-yellow/20 transition-colors">04</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-charcoal mb-3">Green Indore</h3>
+                    <p class="text-muted mb-6">Encouraging tree-planting initiatives, waste awareness, cleanliness drives, and environmentally responsible habits.</p>
+                    <a href="#" class="inline-flex items-center text-primary font-semibold hover:text-deep transition-colors">Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                </div>
+
+                <!-- Initiative 5 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 group fade-in delay-100 border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-soft rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-14 h-14 bg-soft rounded-2xl flex items-center justify-center text-primary">
+                            <i data-lucide="activity" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-4xl font-heading font-extrabold text-gray-100 group-hover:text-soft transition-colors">05</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-charcoal mb-3">Community Health Awareness</h3>
+                    <p class="text-muted mb-6">Supporting awareness activities that encourage preventive care, hygiene, and healthier communities.</p>
+                    <a href="#" class="inline-flex items-center text-primary font-semibold hover:text-deep transition-colors">Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                </div>
+
+                <!-- Initiative 6 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 group fade-in delay-200 border border-gray-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-yellow/10 rounded-bl-full -z-10 transition-transform group-hover:scale-110"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-14 h-14 bg-yellow/20 rounded-2xl flex items-center justify-center text-yellow">
+                            <i data-lucide="users" class="w-7 h-7"></i>
+                        </div>
+                        <span class="text-4xl font-heading font-extrabold text-gray-100 group-hover:text-yellow/20 transition-colors">06</span>
+                    </div>
+                    <h3 class="text-xl font-heading font-bold text-charcoal mb-3">Youth & Volunteer Engagement</h3>
+                    <p class="text-muted mb-6">Bringing people together to contribute their time, skills, and ideas toward community development.</p>
+                    <a href="#" class="inline-flex items-center text-primary font-semibold hover:text-deep transition-colors">Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="py-16 lg:py-24 bg-deep text-white relative overflow-hidden">
+        <!-- Background accents -->
+        <div class="absolute top-0 left-0 w-64 h-64 bg-yellow rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-40 translate-x-1/2 translate-y-1/2"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6 text-white">Every Effort Counts.</h2>
+                <p class="text-white/80 text-lg">Meaningful change starts when people come together.</p>
+                <p class="text-white/50 text-xs mt-2 italic">(Note: The following figures are for demonstration purposes)</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12" id="counter-container">
+                <div class="text-center fade-in">
+                    <div class="text-5xl md:text-6xl font-heading font-extrabold text-yellow mb-2"><span class="counter" data-target="500">0</span>+</div>
+                    <p class="text-white/90 font-medium">People Supported</p>
+                </div>
+                <div class="text-center fade-in delay-100">
+                    <div class="text-5xl md:text-6xl font-heading font-extrabold text-yellow mb-2"><span class="counter" data-target="150">0</span>+</div>
+                    <p class="text-white/90 font-medium">Learning Resources Shared</p>
+                </div>
+                <div class="text-center fade-in delay-200">
+                    <div class="text-5xl md:text-6xl font-heading font-extrabold text-yellow mb-2"><span class="counter" data-target="75">0</span>+</div>
+                    <p class="text-white/90 font-medium">Community Volunteers</p>
+                </div>
+                <div class="text-center fade-in delay-300">
+                    <div class="text-5xl md:text-6xl font-heading font-extrabold text-yellow mb-2"><span class="counter" data-target="12">0</span>+</div>
+                    <p class="text-white/90 font-medium">Community Activities</p>
+                </div>
+            </div>
+            
+            <div class="text-center fade-in delay-300">
+                <a href="#stories" class="text-yellow hover:text-white transition-colors font-medium underline underline-offset-4 decoration-yellow/30 hover:decoration-white">See How Change Happens</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stories of Change -->
+    <section id="stories" class="py-16 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+                <span class="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">Community Stories</span>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal mb-6">Real Change Starts With People.</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Story 1 -->
+                <div class="bg-cream rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group fade-in">
+                    <div class="h-60 overflow-hidden relative">
+                        <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary font-semibold text-xs px-3 py-1 rounded-full z-10">Education</span>
+                        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800" alt="Indian students learning" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-heading font-bold text-charcoal mb-3">A Brighter Start to Learning</h3>
+                        <p class="text-muted mb-6 text-sm leading-relaxed">A community learning initiative demonstrates how access to books, supplies, and guidance can encourage children to explore new opportunities.</p>
+                        <a href="#" class="inline-flex items-center text-charcoal font-semibold hover:text-primary transition-colors">Read Story <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Story 2 -->
+                <div class="bg-cream rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group fade-in delay-100">
+                    <div class="h-60 overflow-hidden relative">
+                        <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary font-semibold text-xs px-3 py-1 rounded-full z-10">Community Support</span>
+                        <img src="https://images.unsplash.com/photo-1518398046578-8cca57782e17?auto=format&fit=crop&q=80&w=800" alt="Indian women community support" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-heading font-bold text-charcoal mb-3">Stronger Together</h3>
+                        <p class="text-muted mb-6 text-sm leading-relaxed">A volunteer-led community support drive brings people together to distribute essential supplies and strengthen local connections.</p>
+                        <a href="#" class="inline-flex items-center text-charcoal font-semibold hover:text-primary transition-colors">Read Story <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                    </div>
+                </div>
+
+                <!-- Story 3 -->
+                <div class="bg-cream rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group fade-in delay-200">
+                    <div class="h-60 overflow-hidden relative">
+                        <span class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary font-semibold text-xs px-3 py-1 rounded-full z-10">Environment</span>
+                        <img src="https://images.unsplash.com/photo-1621644031649-1662fb52eb7b?auto=format&fit=crop&q=80&w=800" alt="Greener Indore farming" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-heading font-bold text-charcoal mb-3">Growing a Greener Indore</h3>
+                        <p class="text-muted mb-6 text-sm leading-relaxed">A community environmental awareness campaign encourages residents to take small, practical steps toward cleaner surroundings.</p>
+                        <a href="#" class="inline-flex items-center text-charcoal font-semibold hover:text-primary transition-colors">Read Story <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i></a>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-xs text-muted mt-8 italic">Note: These stories are for demonstration purposes to show layout structure.</p>
+        </div>
+    </section>
+
+    <!-- Get Involved -->
+    <section id="get-involved" class="py-16 lg:py-24 bg-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+                <h2 class="text-3xl md:text-5xl font-heading font-extrabold text-charcoal mb-6">Be the Reason Someone Smiles Today.</h2>
+                <p class="text-muted text-lg">Positive change becomes possible when people contribute what they can. Join our efforts and help create stronger communities.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Donate -->
+                <div class="bg-white p-10 rounded-3xl text-center shadow-sm hover:shadow-xl transition-all duration-300 fade-in">
+                    <div class="w-16 h-16 bg-soft rounded-full flex items-center justify-center text-primary mx-auto mb-6">
+                        <i data-lucide="heart-handshake" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold text-charcoal mb-4">Donate</h3>
+                    <p class="text-muted mb-8 leading-relaxed">Support initiatives designed to improve access to education and essential resources.</p>
+                    <a href="#donate-section" class="btn-primary w-full">Make a Contribution</a>
+                </div>
+                
+                <!-- Volunteer -->
+                <div class="bg-white p-10 rounded-3xl text-center shadow-sm hover:shadow-xl transition-all duration-300 fade-in delay-100 border-2 border-primary/20 relative overflow-hidden">
+                    <div class="absolute top-0 inset-x-0 h-1 bg-primary"></div>
+                    <div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-primary/30">
+                        <i data-lucide="users" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold text-charcoal mb-4">Volunteer</h3>
+                    <p class="text-muted mb-8 leading-relaxed">Share your time, talents, and energy to support community-focused activities.</p>
+                    <a href="#volunteer-form" class="btn-primary w-full bg-charcoal hover:bg-black text-white">Become a Volunteer</a>
+                </div>
+                
+                <!-- Partner -->
+                <div class="bg-white p-10 rounded-3xl text-center shadow-sm hover:shadow-xl transition-all duration-300 fade-in delay-200">
+                    <div class="w-16 h-16 bg-yellow/20 rounded-full flex items-center justify-center text-yellow mx-auto mb-6">
+                        <i data-lucide="briefcase" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-2xl font-heading font-bold text-charcoal mb-4">Partner With Us</h3>
+                    <p class="text-muted mb-8 leading-relaxed">Explore opportunities for organizations, educational institutions, and businesses to support community development.</p>
+                    <a href="https://wa.me/916232767443?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20partnership%20opportunities%20with%20ShreeIndoreNgo." target="_blank" class="btn-secondary w-full">Explore Partnerships</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section id="donate-section" class="py-16 lg:py-24 bg-white relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-soft/40 border border-soft p-8 md:p-12 rounded-[2.5rem] shadow-sm fade-in relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white rounded-full mix-blend-overlay filter blur-3xl opacity-50"></div>
+                
+                <div class="text-center mb-10 relative z-10">
+                    <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal mb-4">Your Support Can Make a Difference.</h2>
+                    <p class="text-muted max-w-2xl mx-auto">Every contribution matters. Help support community initiatives focused on learning, essential needs, and sustainable development.</p>
+                </div>
+                
+                <form id="donation-form" class="relative z-10" onsubmit="event.preventDefault(); window.open('https://wa.me/916232767443?text=Hello%2C%20I%20would%20like%20to%20support%20ShreeIndoreNgo.', '_blank');">
+                    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+                        <button type="button" class="donation-btn py-3 px-2 sm:px-4 border border-gray-200 rounded-xl font-semibold text-sm sm:text-base text-charcoal hover:border-primary transition-colors bg-white shadow-sm" data-amount="250">₹250</button>
+                        <button type="button" class="donation-btn py-3 px-2 sm:px-4 border border-gray-200 rounded-xl font-semibold text-sm sm:text-base text-charcoal hover:border-primary transition-colors bg-white shadow-sm" data-amount="500">₹500</button>
+                        <button type="button" class="donation-btn py-3 px-2 sm:px-4 border border-primary bg-primary text-white rounded-xl font-semibold text-sm sm:text-base shadow-md shadow-primary/20 transition-colors" data-amount="1000">₹1,000</button>
+                        <button type="button" class="donation-btn py-3 px-2 sm:px-4 border border-gray-200 rounded-xl font-semibold text-sm sm:text-base text-charcoal hover:border-primary transition-colors bg-white shadow-sm" data-amount="2500">₹2,500</button>
+                        <div class="col-span-2 md:col-span-1 relative">
+                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium">₹</span>
+                            <input type="number" id="custom-amount" placeholder="Custom" class="w-full py-3 pl-8 pr-4 border border-gray-200 rounded-xl font-semibold text-charcoal focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white shadow-sm">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div>
+                            <label class="block text-sm font-medium text-charcoal mb-2">Full Name (Optional)</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-charcoal mb-2">Email Address (Optional)</label>
+                            <input type="email" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-white">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary w-full text-lg py-4 shadow-xl shadow-primary/20 mb-4">
+                        Continue to Donate
+                    </button>
+                    
+                    <p class="text-center text-xs text-muted">
+                        * Note: This is a demo presentation. The suggested amounts are examples and not guarantees of specific outcomes. Currently, this button redirects to WhatsApp as official payment integration is pending.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer Form -->
+    <section id="volunteer-form" class="py-16 lg:py-24 bg-cream border-t border-gray-100">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 fade-in">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal mb-4">Your Time Can Create Change.</h2>
+                <p class="text-muted">Register your interest to volunteer with us.</p>
+            </div>
+            
+            <form id="vol-form" class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100" onsubmit="event.preventDefault(); alert('Demo Notice: Live submission requires integration. Please use the WhatsApp button to contact us directly.');">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Full Name *</label>
+                        <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Email Address *</label>
+                        <input type="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/50">
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Phone Number *</label>
+                        <input type="tel" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/50">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-charcoal mb-2">Area of Interest *</label>
+                        <select required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/50 text-charcoal">
+                            <option value="">Select an area</option>
+                            <option>Education</option>
+                            <option>Food distribution</option>
+                            <option>Women empowerment</option>
+                            <option>Environmental activities</option>
+                            <option>Community outreach</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-charcoal mb-2">Availability</label>
+                    <input type="text" placeholder="e.g. Weekends, Weekday evenings" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/50">
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-charcoal mb-2">Skills or Experience</label>
+                    <textarea rows="2" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/50"></textarea>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-charcoal mb-2">Why would you like to volunteer?</label>
+                    <textarea rows="3" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/50"></textarea>
+                </div>
+                
+                <div class="mb-8 flex items-start">
+                    <input type="checkbox" id="consent" required class="mt-1 mr-3 rounded text-primary focus:ring-primary">
+                    <label for="consent" class="text-sm text-muted">I consent to being contacted by ShreeIndoreNgo regarding volunteer opportunities.</label>
+                </div>
+                
+                <button type="submit" class="btn-primary w-full py-4 text-lg">Submit Volunteer Interest</button>
+                <p class="text-xs text-center text-muted mt-4">* Demo State: Submissions are not processed without backend integration.</p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
+    <section id="certifications" class="py-16 lg:py-24 bg-white border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+                <span class="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">Trust & Transparency</span>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal mb-6">Our Accreditations</h2>
+                <p class="text-muted text-lg">We maintain the highest standards of transparency and accountability.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Certificate 1 -->
+                <div class="bg-cream rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center fade-in">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-yellow mb-6 shadow-sm border border-gray-100">
+                        <i data-lucide="award" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-lg font-heading font-bold text-charcoal mb-2">80G Certificate</h3>
+                    <p class="text-sm text-muted mb-4">Tax exemption status under section 80G of the Income Tax Act.</p>
+                    <div class="mt-auto pt-4 border-t border-gray-200 w-full">
+                        <p class="text-xs font-mono text-gray-500">Reg No: DUMMY-80G-XXXX</p>
+                    </div>
+                </div>
+                
+                <!-- Certificate 2 -->
+                <div class="bg-cream rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center fade-in delay-100">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-yellow mb-6 shadow-sm border border-gray-100">
+                        <i data-lucide="shield-check" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-lg font-heading font-bold text-charcoal mb-2">12A Registration</h3>
+                    <p class="text-sm text-muted mb-4">Registered under section 12A of the Income Tax Act.</p>
+                    <div class="mt-auto pt-4 border-t border-gray-200 w-full">
+                        <p class="text-xs font-mono text-gray-500">Reg No: DUMMY-12A-XXXX</p>
+                    </div>
+                </div>
+                
+                <!-- Certificate 3 -->
+                <div class="bg-cream rounded-2xl p-8 border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col items-center text-center fade-in delay-200">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-yellow mb-6 shadow-sm border border-gray-100">
+                        <i data-lucide="file-check" class="w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-lg font-heading font-bold text-charcoal mb-2">CSR-1 Certified</h3>
+                    <p class="text-sm text-muted mb-4">Registered with MCA for undertaking CSR activities.</p>
+                    <div class="mt-auto pt-4 border-t border-gray-200 w-full">
+                        <p class="text-xs font-mono text-gray-500">Reg No: DUMMY-CSR-XXXX</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-xs text-muted mt-8 italic">* Note: These are dummy certificates for demonstration purposes.</p>
+        </div>
+    </section>
+
+    <!-- Partners Placeholder -->
+    <section class="py-16 bg-white border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+            <h2 class="text-2xl font-heading font-bold text-charcoal mb-4">Stronger Communities Are Built Together.</h2>
+            <p class="text-muted max-w-2xl mx-auto mb-10 text-sm">We welcome collaboration with organizations, educational institutions, local communities, and individuals who share our commitment to positive social change.</p>
+            
+            <div class="flex flex-wrap justify-center gap-6 opacity-60 grayscale">
+                <div class="px-6 py-4 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium text-gray-500">CSR Partners (Placeholder)</div>
+                <div class="px-6 py-4 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium text-gray-500">Community Organizations (Placeholder)</div>
+                <div class="px-6 py-4 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium text-gray-500">Educational Institutions (Placeholder)</div>
+                <div class="px-6 py-4 bg-gray-50 border border-gray-200 rounded-lg text-sm font-medium text-gray-500">Local Supporters (Placeholder)</div>
+            </div>
+            <p class="text-xs text-gray-400 mt-4 italic">Sample placeholders until real partners are added.</p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 lg:py-24 bg-cream">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 fade-in">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal mb-4">Frequently Asked Questions</h2>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                    <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-heading font-semibold text-charcoal text-lg">What is ShreeIndoreNgo?</span>
+                        <i data-lucide="chevron-down" class="accordion-icon w-5 h-5 text-primary"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-white">
+                        <p class="text-muted text-sm pb-4">ShreeIndoreNgo is a community-focused nonprofit initiative created to support people, expand opportunities, and encourage positive change in Indore through various collaborative efforts.</p>
+                    </div>
+                </div>
+                <!-- FAQ 2 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                    <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-heading font-semibold text-charcoal text-lg">How can I volunteer?</span>
+                        <i data-lucide="chevron-down" class="accordion-icon w-5 h-5 text-primary"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-white">
+                        <p class="text-muted text-sm pb-4">You can express your interest by filling out the volunteer registration form on our website or directly messaging us via WhatsApp using the buttons provided.</p>
+                    </div>
+                </div>
+                <!-- FAQ 3 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                    <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-heading font-semibold text-charcoal text-lg">How can I support an initiative?</span>
+                        <i data-lucide="chevron-down" class="accordion-icon w-5 h-5 text-primary"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-white">
+                        <p class="text-muted text-sm pb-4">Support can be given through volunteering your time, offering resources, or providing financial contributions. Click the "Donate" or "Get Involved" sections to learn more.</p>
+                    </div>
+                </div>
+                <!-- FAQ 4 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                    <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-heading font-semibold text-charcoal text-lg">Can an organization collaborate with the NGO?</span>
+                        <i data-lucide="chevron-down" class="accordion-icon w-5 h-5 text-primary"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-white">
+                        <p class="text-muted text-sm pb-4">Yes, we welcome collaborations with organizations and institutions. Please contact us to explore partnership opportunities.</p>
+                    </div>
+                </div>
+                <!-- FAQ 5 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                    <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-heading font-semibold text-charcoal text-lg">How will donations be used?</span>
+                        <i data-lucide="chevron-down" class="accordion-icon w-5 h-5 text-primary"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-white">
+                        <p class="text-muted text-sm pb-4">Donations are directed toward our core initiatives: supporting educational needs, food distribution, empowering women, and local environmental activities. (Demo Answer)</p>
+                    </div>
+                </div>
+                <!-- FAQ 6 -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                    <button class="accordion-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-heading font-semibold text-charcoal text-lg">How can I contact the team?</span>
+                        <i data-lucide="chevron-down" class="accordion-icon w-5 h-5 text-primary"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-white">
+                        <p class="text-muted text-sm pb-4">You can use our contact form, email us at the provided address, or click the WhatsApp button to chat directly with our team at +91 62327 67443.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Us -->
+    <section id="contact" class="py-16 lg:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in">
+                <span class="text-primary font-bold tracking-wider uppercase text-sm mb-3 block">Contact Us</span>
+                <h2 class="text-3xl md:text-4xl font-heading font-bold text-charcoal mb-6">Let's Start a Conversation.</h2>
+                <p class="text-muted text-lg">Have a question, an idea, or a desire to contribute? We would love to hear from you.</p>
+            </div>
+            
+            <div class="grid lg:grid-cols-5 gap-12">
+                <div class="lg:col-span-2 space-y-8 fade-in">
+                    <!-- Info Cards -->
+                    <div class="bg-cream p-6 rounded-2xl flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shrink-0 shadow-sm">
+                            <i data-lucide="map-pin" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-charcoal mb-1">Visit Us</h4>
+                            <p class="text-muted text-sm leading-relaxed">Sample Office Address,<br>Indore, Madhya Pradesh, India</p>
+                            <p class="text-xs text-gray-400 mt-1 italic">(Placeholder Location)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-cream p-6 rounded-2xl flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shrink-0 shadow-sm">
+                            <i data-lucide="phone" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-charcoal mb-1">Call or WhatsApp</h4>
+                            <a href="tel:+916232767443" class="text-muted hover:text-primary transition-colors text-sm">+91 62327 67443</a>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-cream p-6 rounded-2xl flex items-start gap-4">
+                        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-primary shrink-0 shadow-sm">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-bold text-charcoal mb-1">Email Us</h4>
+                            <a href="mailto:hello@shreeindorengo.example" class="text-muted hover:text-primary transition-colors text-sm break-all">hello@shreeindorengo.example</a>
+                            <p class="text-xs text-gray-400 mt-1 italic">(Demo Email)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-3 fade-in delay-100">
+                    <form id="contact-form" class="bg-white rounded-3xl shadow-lg border border-gray-100 p-8" onsubmit="event.preventDefault(); alert('Demo Notice: This form requires a backend. Please use the WhatsApp button to contact us immediately.');">
+                        <div class="grid md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <label class="block text-sm font-medium text-charcoal mb-2">Full Name *</label>
+                                <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/30">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-charcoal mb-2">Email Address *</label>
+                                <input type="email" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/30">
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-charcoal mb-2">Subject</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/30">
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-charcoal mb-2">Message *</label>
+                            <textarea rows="4" required class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary bg-cream/30"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary w-full py-4 text-lg">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white pt-20 pb-10 border-t-4 border-primary relative overflow-hidden">
+        <!-- Abstract shape -->
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-primary rounded-tl-full mix-blend-overlay opacity-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="lg:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <i data-lucide="sun" class="text-primary w-8 h-8"></i>
+                        <span class="font-heading font-bold text-2xl tracking-tight">ShreeIndore<span class="text-primary">Ngo</span></span>
+                    </div>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-6">Small Acts. Greater Impact. A community-focused initiative supporting education, essential needs, and positive change in Indore.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors text-white" aria-label="Facebook (Placeholder)"><i data-lucide="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors text-white" aria-label="Twitter (Placeholder)"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors text-white" aria-label="Instagram (Placeholder)"><i data-lucide="instagram" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-heading font-semibold text-lg mb-6">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition-colors text-sm">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition-colors text-sm">About Us</a></li>
+                        <li><a href="#impact" class="text-gray-400 hover:text-white transition-colors text-sm">Our Impact</a></li>
+                        <li><a href="#get-involved" class="text-gray-400 hover:text-white transition-colors text-sm">Get Involved</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-white transition-colors text-sm">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-heading font-semibold text-lg mb-6">Our Initiatives</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#initiatives" class="text-gray-400 hover:text-white transition-colors text-sm">Education</a></li>
+                        <li><a href="#initiatives" class="text-gray-400 hover:text-white transition-colors text-sm">Food Support</a></li>
+                        <li><a href="#initiatives" class="text-gray-400 hover:text-white transition-colors text-sm">Women Empowerment</a></li>
+                        <li><a href="#initiatives" class="text-gray-400 hover:text-white transition-colors text-sm">Environment</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-heading font-semibold text-lg mb-6">Stay Updated</h4>
+                    <p class="text-gray-400 text-sm mb-4">Subscribe to our newsletter for updates. (Demo)</p>
+                    <form class="flex" onsubmit="event.preventDefault();">
+                        <input type="email" placeholder="Email address" class="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-l-lg focus:outline-none focus:border-primary text-sm text-white placeholder-gray-500">
+                        <button type="submit" class="bg-primary hover:bg-deep px-4 py-2 rounded-r-lg transition-colors text-white">
+                            <i data-lucide="send" class="w-4 h-4"></i>
+                        </button>
+                    </form>
+                    <div class="mt-6 space-y-2">
+                        <p class="text-gray-400 text-sm flex items-center gap-2"><i data-lucide="phone" class="w-4 h-4"></i> +91 62327 67443</p>
+                        <p class="text-gray-400 text-sm flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4"></i> hello@shreeindorengo.example</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-gray-500 text-sm">© 2026 ShreeIndoreNgo. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">Privacy Policy (Draft)</a>
+                    <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">Terms of Use (Draft)</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/916232767443" target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="Chat with ShreeIndoreNgo on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/><path d="M16 14.5a2.5 2.5 0 0 1-5 0 2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 0 5z"/></svg>
+    </a>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu on link click
+        menu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
+        // Sticky Navbar
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('py-0');
+            } else {
+                navbar.classList.remove('py-0');
+            }
+        });
+
+        // Scroll animations (Intersection Observer)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                    
+                    // Trigger counter animation if inside impact section
+                    if (entry.target.id === 'counter-container' || entry.target.querySelector('.counter')) {
+                        const counters = document.querySelectorAll('.counter');
+                        counters.forEach(counter => {
+                            const updateCount = () => {
+                                const target = +counter.getAttribute('data-target');
+                                const count = +counter.innerText;
+                                const inc = target / 40; // speed
+                                if (count < target) {
+                                    counter.innerText = Math.ceil(count + inc);
+                                    setTimeout(updateCount, 40);
+                                } else {
+                                    counter.innerText = target;
+                                }
+                            };
+                            updateCount();
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(element => {
+            observer.observe(element);
+        });
+        
+        // Observe counter container separately if needed
+        const counterContainer = document.getElementById('counter-container');
+        if(counterContainer) observer.observe(counterContainer);
+
+        // Accordion Logic
+        const accordionBtns = document.querySelectorAll('.accordion-btn');
+        accordionBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content.classList.contains('expanded')) {
+                    content.classList.remove('expanded');
+                } else {
+                    // Close others
+                    document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('expanded'));
+                    document.querySelectorAll('.accordion-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    content.classList.add('expanded');
+                }
+            });
+        });
+
+        // Donation Buttons Selection
+        const donationBtns = document.querySelectorAll('.donation-btn');
+        const customInput = document.getElementById('custom-amount');
+        donationBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                donationBtns.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    b.classList.add('bg-white', 'text-charcoal', 'border-gray-200');
+                });
+                btn.classList.remove('bg-white', 'text-charcoal', 'border-gray-200');
+                btn.classList.add('bg-primary', 'text-white', 'border-primary');
+                customInput.value = '';
+            });
+        });
+        customInput.addEventListener('input', () => {
+            if(customInput.value) {
+                donationBtns.forEach(b => {
+                    b.classList.remove('bg-primary', 'text-white', 'border-primary');
+                    b.classList.add('bg-white', 'text-charcoal', 'border-gray-200');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

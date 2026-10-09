@@ -1,0 +1,52 @@
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4, h5, h6, .font-heading { font-family: 'Poppins', sans-serif; }
+        
+        /* Animations */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+        
+        /* Accordion */
+        .accordion-content { transition: max-height 0.3s ease-out, padding 0.3s ease; max-height: 0; overflow: hidden; }
+        .accordion-content.expanded { max-height: 500px; padding-bottom: 1rem; }
+        .accordion-icon { transition: transform 0.3s ease; }
+        .accordion-btn.active .accordion-icon { transform: rotate(180deg); }
+        
+        /* Buttons */
+        .btn-primary {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: var(--color-primary, #F47B20); color: white; padding: 0.75rem 1.75rem;
+            border-radius: 9999px; font-weight: 600; transition: all 0.3s ease;
+        }
+        .btn-primary:hover { background-color: var(--color-deep, #C6531B); transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(244, 123, 32, 0.3); }
+        
+        .btn-secondary {
+            display: inline-flex; align-items: center; justify-content: center;
+            background-color: white; color: var(--color-charcoal, #242424); padding: 0.75rem 1.75rem;
+            border-radius: 9999px; font-weight: 600; transition: all 0.3s ease; border: 1px solid #e5e7eb;
+        }
+        .btn-secondary:hover { border-color: var(--color-primary, #F47B20); color: var(--color-primary, #F47B20); transform: translateY(-2px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        
+        .donation-amount.selected {
+            background-color: #F47B20; color: white; border-color: #F47B20;
+        }
+        
+        /* Floating WhatsApp */
+        .whatsapp-float {
+            position: fixed; z-index: 100;
+            background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center;
+            display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        }
+        .whatsapp-float:hover { transform: scale(1.1); box-shadow: 0px 6px 14px rgba(0,0,0,0.4); }
+        @media (max-width: 768px) {
+            .whatsapp-float { width: 50px; height: 50px; bottom: 20px; right: 20px; }
+            .whatsapp-float svg { width: 24px; height: 24px; }
+        }
+        @media (min-width: 769px) {
+            .whatsapp-float { width: 60px; height: 60px; bottom: 30px; right: 30px; }
+            .whatsapp-float svg { width: 30px; height: 30px; }
+        }
